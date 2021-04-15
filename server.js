@@ -1,6 +1,10 @@
 const express = require('express')
 const app = express()
 
+const mongoose = require('mongoose');
+mongoose.connect('mongodb+srv://dyin4:yindan77@cluster0.zyayu.mongodb.net/whiteboard-02',
+    {useNewUrlParser: true, useUnifiedTopology: true});
+
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers',
@@ -11,8 +15,12 @@ app.use(function (req, res, next) {
 });
 
 
-require('./controllers/demos-controller')(app)
+var bodyParser = require('body-parser')
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+
 
 require('./controllers/quizzes-controller')(app)
 require('./controllers/questions-controller')(app)
+require('./controllers/quiz-attempts-controller')(app)
 app.listen(4000)

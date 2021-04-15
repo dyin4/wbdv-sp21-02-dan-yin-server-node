@@ -4,13 +4,17 @@ module.exports = (app) => {
   const questionsService = require('../services/questions/questions-service')
   //req, res allows participating in client/server
   const findAllQuestions = (req, res) => {
-    const questions = questionsService.findAllQuestions()
-    res.send(questions)
+    questionsService.findAllQuestions()
+    .then((questions) => {
+      res.json(questions)
+    })
   }
   const findQuestionsForQuiz = (req, res) => {
     const qid = req.params['qzid']
-    const questions = questionsService.findQuestionsForQuiz(qid)
-    res.send(questions)
+    questionsService.findQuestionsForQuiz(qid).then((questions) => {
+      res.json(questions)
+    })
+
   }
   app.get('/api/questions', findAllQuestions)
   app.get('/api/quizzes/:qzid/questions', findQuestionsForQuiz)
