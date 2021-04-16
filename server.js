@@ -1,9 +1,11 @@
+const path = require('path');
+require('dotenv').config({path: path.resolve(__dirname+'/.env')});
 const express = require('express')
 const app = express()
 
 const mongoose = require('mongoose');
 console.log("Database_URL", process.env.MONGO_DB_URI);
-const uri = process.env.MONGO_DB_URI || 'mongodb+srv://dyin4:yindan77@cluster0.zyayu.mongodb.net/whiteboard-02'
+const uri = process.env.MONGO_DB_URI
 mongoose.connect(uri,
     {useNewUrlParser: true, useUnifiedTopology: true});
 
@@ -31,4 +33,6 @@ app.get('/', function(req, res) {
 require('./controllers/quizzes-controller')(app)
 require('./controllers/questions-controller')(app)
 require('./controllers/quiz-attempts-controller')(app)
-app.listen(process.env.PORT || 4000)
+app.listen(process.env.PORT || 4000, function() {
+  console.log("server running")
+})
