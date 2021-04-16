@@ -3,7 +3,8 @@ const express = require('express')
 const app = express()
 
 const mongoose = require('mongoose');
-mongoose.connect('mongodb+srv://dyin4:yindan77@cluster0.zyayu.mongodb.net/whiteboard-02',
+const uri = process.env.MONGO_DB_URI || 'mongodb+srv://dyin4:yindan77@cluster0.zyayu.mongodb.net/whiteboard-02'
+mongoose.connect(uri,
     {useNewUrlParser: true, useUnifiedTopology: true});
 
 app.use(function (req, res, next) {
